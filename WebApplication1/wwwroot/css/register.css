@@ -1,0 +1,27 @@
+﻿body {
+    background-image: url("/images/loginbg.jpg");
+    background-size: cover; 
+    background-position: center; 
+    background-attachment: fixed; 
+}
+
+.auth-form {
+    max-width: 400px; 
+    margin: 50px auto; 
+    padding: 20px; /
+    background-color: rgba(0, 0, 0, 0.8); 
+    border-radius: 5px; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+}
+
+.form-group {
+    margin-bottom: 15px; 
+}
+
+.btn-primary {
+    width: 100%; 
+}
+
+.text-danger {
+    font-size: 0.9em; 
+}

@@ -1,0 +1,73 @@
+﻿@model WebApplication1.Models.TVShow
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.Title - DFT Video</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="~/css/tvshowdetail.css">
+</head>
+<body>
+    <div class="container">
+        <div>
+            <img src="~/images/tvshows/@Model.PosterUrl" alt="@Model.Title" class="tvshow-poster" />
+            <a href="/" class="back-link">Back to the Home Page</a>
+        </div>
+        <div class="tvshow-details">
+            <h2 class="tvshow-title">@Model.Title</h2>
+            <div class="tvshow-rating">
+                IMDb: @Model.Rating.ToString("0.0")
+            </div>
+            <p class="tvshow-description"><strong>Description:</strong> @Model.Description</p>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                    <div class="star-rating" id="star-rating">
+                        <i class="far fa-star" data-rating="1"></i>
+                        <i class="far fa-star" data-rating="2"></i>
+                        <i class="far fa-star" data-rating="3"></i>
+                        <i class="far fa-star" data-rating="4"></i>
+                        <i class="far fa-star" data-rating="5"></i>
+                    </div>
+
+                        <form id="comment-form" method="post" asp-controller="Comment" asp-action="AddComment">
+                        <input type="hidden" name="tvShowId" value="@Model.Id"> 
+                        <input type="hidden" name="author" value="@User.Identity.Name"> 
+                        <input type="hidden" name="rating" id="user-rating" value="0"> 
+                        <textarea name="content" id="comment-content" placeholder="Write your comment here..."></textarea> 
+                        <button type="submit">Submit Comment</button>
+                    </form>
+            }
+            else
+            {
+                    <p>Please <a href="/Auth/Login">log in</a> to rate the TV show and submit a comment.</p>
+            }
+
+            <div id="comment-section">
+                <h3>Comments</h3>
+                @foreach (var comment in Model.Comments)
+                {
+                    <div class="comment">
+                        <p>
+                            <strong>@comment.Author</strong> -
+                            <span class="comment-stars">
+                                @for (int i = 0; i < comment.Rating; i++)
+                                {
+                                    <i class="fas fa-star"></i>
+                                }
+                            </span>
+                            <span>@comment.Date.ToString("yyyy-MM-dd HH:mm")</span>
+                        </p>
+                        <p>@comment.Content</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    
+    <script src="~/js/tvshow-detail.js"></script>
+
+</body>
+</html>

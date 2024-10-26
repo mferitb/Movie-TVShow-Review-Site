@@ -1,0 +1,57 @@
+﻿@model WebApplication1.Models.MovieTVShowViewModel
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DFT - Movie and TV Show Rating Site</title>
+    <link rel="stylesheet" href="~/css/site.css">
+</head>
+
+<header class="header">
+    <div class="logo">
+        DFT Video
+        <a href="#movies" id="movies-link">Movies</a>
+        <a href="#tvshows" id="tvshows-link">TV Shows</a>
+    </div>
+    <nav class="nav">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a href="@Url.Action("Logout", "Auth")" id="logout-link">Log out</a>
+        }
+        else
+        {
+            <a href="@Url.Action("Login", "Auth")" id="login-link">Log in</a>
+            <a href="@Url.Action("Register", "Auth")" id="register-link">Register</a>
+        }
+    </nav>
+</header>
+
+<div class="content">
+    <h2 id="movies" style="margin-left: 60px;">Movies</h2>
+    <div class="movie-grid" style="margin-top: 20px;">
+        @foreach (var movie in Model.Movies)
+        {
+            <div class="movie-card">
+                <a href="@Url.Action("MovieDetail", "Comment", new { id = movie.Id })">
+                    <img src="~/images/movies/@movie.PosterUrl" alt="@movie.Title" />
+                    <h3>@movie.Title</h3>
+                    <p>IMDb: @movie.Rating</p>
+                </a>
+            </div>
+        }
+    </div>
+
+    <h2 id="tvshows" style="margin-left: 60px; margin-top: 40px;">TV Shows</h2>
+    <div class="tvshow-grid" style="margin-top: 20px;">
+        @foreach (var tvShow in Model.TVShows)
+        {
+            <div class="tvshow-card">
+                <a href="@Url.Action("TVShowDetail", "Comment", new { id = tvShow.Id })">
+                    <img src="~/images/tvshows/@tvShow.PosterUrl" alt="@tvShow.Title" />
+                    <h3>@tvShow.Title</h3>
+                    <p>IMDb: @tvShow.Rating</p>
+                </a>
+            </div>
+        }
+    </div>
+</div>
